@@ -1,0 +1,27 @@
+{
+  "hero": {
+    "label": "New collection",
+    "slide": "Slide {{n}}",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow"
+  },
+  "perksLabel": "Order perks",
+  "tops": {
+    "title": "Tops",
+    "subtitle": "Hoodies, sweatshirts & zips"
+  },
+  "bottoms": {
+    "title": "Bottoms",
+    "subtitle": "Fleece pants in three cuts",
+    "cta": "Shop all pants"
+  },
+  "look": {
+    "setPrice": "Set price",
+    "addSet": "Add the set to bag",
+    "hotspot": "{{name}} details"
+  },
+  "lookbook": {
+    "title": "#TimberGlow",
+    "subtitle": "How you wear it. Tag us on Instagram."
+  }
+}

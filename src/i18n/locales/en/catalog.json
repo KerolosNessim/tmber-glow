@@ -1,0 +1,58 @@
+{
+  "allTitle": "All products",
+  "allSubtitle": "Hoodies, sweatshirts and fleece pants.",
+  "count_one": "{{count}} product",
+  "count_other": "{{count}} products",
+  "chooseSize": "Choose a size",
+  "groups": {
+    "all": "All",
+    "tops": "Tops",
+    "bottoms": "Bottoms"
+  },
+  "product": {
+    "breadcrumbHome": "Home",
+    "color": "Color",
+    "size": "Size",
+    "sizeGuide": "Size guide",
+    "quantity": "Quantity",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "total": "Total",
+    "perks": {
+      "ship": "Free shipping over 1,500 EGP",
+      "swap": "14-day exchange",
+      "cod": "Cash on delivery"
+    },
+    "details": {
+      "fabric": "Fabric",
+      "fabricBody": "{{gsm}} GSM heavy cotton fleece, brushed inside. Made in Egypt.",
+      "fit": "Fit",
+      "fitBody": "Between two sizes? Size down for a closer fit, size up for more room.",
+      "care": "Care",
+      "careBody": "Wash cold, inside out. Do not tumble dry. Iron on the reverse."
+    },
+    "related": {
+      "title": "You may also like",
+      "subtitle": "More from the winter range"
+    },
+    "notFound": "This product doesn't exist"
+  },
+  "chart": {
+    "titleTops": "Hoodie size chart",
+    "titleBottoms": "Pants size chart",
+    "subtitle": "Flat measurements in cm. Measure from the same places the arrows show.",
+    "size": "Size",
+    "length": "Length",
+    "waist": "Waist",
+    "hip": "Hip",
+    "inseam": "Inseam",
+    "howTitle": "How to measure",
+    "howLength": "Length: from the highest point of the shoulder down to the hem.",
+    "howWaist": "Waist: lay flat and measure across the top of the waistband.",
+    "howHip": "Hip: measure across the widest part, below the pocket opening.",
+    "howInseam": "Inseam: from the crotch seam down to the hem.",
+    "width": "Width",
+    "howWidth": "Width: measure straight across the chest, between the armpit seams.",
+    "imageAlt": "Hoodie measurement diagram and size table"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "hero": {
+    "label": "الكولكشن الجديد",
+    "slide": "الشريحة {{n}}",
+    "pause": "إيقاف التقليب",
+    "play": "شغل التقليب"
+  },
+  "perksLabel": "مميزات الطلب",
+  "tops": {
+    "title": "Tops",
+    "subtitle": "هوديز وسويتشيرتات وسوستة"
+  },
+  "bottoms": {
+    "title": "Bottoms",
+    "subtitle": "بناطيل ملتون بتلات قصّات",
+    "cta": "كل البناطيل"
+  },
+  "look": {
+    "setPrice": "سعر الطقم",
+    "addSet": "أضف الطقم للشنطة",
+    "hotspot": "تفاصيل {{name}}"
+  },
+  "lookbook": {
+    "title": "#TimberGlow",
+    "subtitle": "إزاي بتلبسوه. اعملولنا تاج على انستجرام."
+  }
+}

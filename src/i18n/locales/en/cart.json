@@ -1,0 +1,14 @@
+{
+  "title": "Your bag",
+  "empty": "Your bag is empty.",
+  "freeShippingDone": "Your order ships free.",
+  "freeShippingLeft": "Add {{amount}} more for free shipping.",
+  "subtotal": "Subtotal",
+  "note": "Shipping is calculated at checkout. Cash on delivery available.",
+  "checkout": "Checkout",
+  "continue": "Continue shopping",
+  "decrease": "Decrease",
+  "increase": "Increase",
+  "remove": "Remove",
+  "closeBag": "Close bag"
+}

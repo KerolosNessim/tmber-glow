@@ -1,0 +1,33 @@
+{
+  "brand": "Timber Glow",
+  "actions": {
+    "previous": "Previous",
+    "next": "Next",
+    "close": "Close",
+    "addToBag": "Add to bag",
+    "shopAll": "Shop all products",
+    "backHome": "Back to home",
+    "retry": "Try again"
+  },
+  "badges": {
+    "new": "New",
+    "bestseller": "Best seller",
+    "set": "The set"
+  },
+  "states": {
+    "loading": "Loading…",
+    "error": "Something went wrong while loading.",
+    "empty": "No products here yet."
+  },
+  "language": {
+    "label": "Language",
+    "switchTo": "عربي",
+    "short": "ع"
+  },
+  "size": "Size",
+  "styles": "{{count}} STYLES",
+  "notFound": {
+    "title": "This page doesn't exist",
+    "body": "The link may have changed or the page was removed."
+  }
+}

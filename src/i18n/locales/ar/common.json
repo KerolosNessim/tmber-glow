@@ -1,0 +1,33 @@
+{
+  "brand": "Timber Glow",
+  "actions": {
+    "previous": "السابق",
+    "next": "التالي",
+    "close": "اقفل",
+    "addToBag": "أضف للشنطة",
+    "shopAll": "تسوق كل المنتجات",
+    "backHome": "ارجع للرئيسية",
+    "retry": "جرب تاني"
+  },
+  "badges": {
+    "new": "جديد",
+    "bestseller": "الأكثر طلبًا",
+    "set": "الطقم"
+  },
+  "states": {
+    "loading": "بيحمّل…",
+    "error": "حصلت مشكلة وإحنا بنجيب البيانات.",
+    "empty": "مفيش منتجات هنا لسه."
+  },
+  "language": {
+    "label": "اللغة",
+    "switchTo": "English",
+    "short": "EN"
+  },
+  "size": "المقاس",
+  "styles": "{{count}} STYLES",
+  "notFound": {
+    "title": "الصفحة دي مش موجودة",
+    "body": "يمكن اللينك اتغير أو الصفحة اتشالت."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "bar": "Free shipping over <b>1,500 EGP</b> · Cash on delivery",
+  "nav": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "sets": "Sets",
+    "contact": "Contact",
+    "returns": "Returns"
+  },
+  "aria": {
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "account": "Account",
+    "bag": "Bag"
+  },
+  "footer": {
+    "supportTitle": "Need help? Message us on social",
+    "supportBody": "We answer orders, sizing and exchanges every day from 12 pm to 10 pm.",
+    "shop": "Shop",
+    "help": "Help",
+    "tops": "Tops",
+    "bottoms": "Bottoms",
+    "sets": "Sets",
+    "sizeGuide": "Size guide",
+    "exchange": "Exchange request",
+    "track": "Track order",
+    "privacy": "Privacy policy",
+    "refund": "Refund policy"
+  },
+  "search": {
+    "title": "Search products",
+    "placeholder": "Search hoodies, pants, colors…",
+    "close": "Close search",
+    "suggested": "SUGGESTED",
+    "count_one": "{{count}} RESULT",
+    "count_other": "{{count}} RESULTS",
+    "empty": "No products match \"{{query}}\". Try another name or color."
+  }
+}

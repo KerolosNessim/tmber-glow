@@ -1,0 +1,14 @@
+{
+  "title": "الشنطة",
+  "empty": "الشنطة فاضية.",
+  "freeShippingDone": "طلبك شحنه مجاني.",
+  "freeShippingLeft": "فاضلك {{amount}} وتاخد شحن مجاني.",
+  "subtotal": "الإجمالي",
+  "note": "الشحن بيتحسب في الخطوة الجاية. متاح الدفع عند الاستلام.",
+  "checkout": "كمّل الطلب",
+  "continue": "كمّل تسوق",
+  "decrease": "قلل",
+  "increase": "زود",
+  "remove": "شيل",
+  "closeBag": "اقفل الشنطة"
+}

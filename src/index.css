@@ -1,0 +1,190 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ==========================================================================
+   Timber Glow — design tokens (design system v2). Light only.
+   Brand colours are exposed as Tailwind utilities (bg-forest, text-ember-ink…)
+   and mapped to the shadcn variables (--primary, --border…) below.
+   ========================================================================== */
+
+@theme {
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-forest: #42604f;
+  --color-forest-deep: #263b31;
+  --color-forest-tint: #eef3ef;
+  --color-forest-line: #cfdcd3;
+  --color-ember: #e2703f;
+  --color-ember-ink: #a9491f;
+  --color-ember-tint: #fceee6;
+  --color-gold: #e0c68a;
+  --color-gold-ink: #7d6428;
+  --color-gold-tint: #f7f1e1;
+
+  --color-surface: #ffffff;
+  --color-surface-soft: #f8f8f5;
+  --color-surface-sunken: #f2f3ef;
+
+  --color-ink: #17201b;
+  --color-ink-muted: #5a6660;
+  --color-on-forest: #f1f0e9;
+  --color-line: #e6e8e3;
+  --color-line-strong: #d3d7d0;
+  --color-line-control: #848e88;
+  --color-success: #2c6b4c;
+  --color-danger: #b4372f;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-xs: 0 1px 2px rgb(23 32 27 / 0.05);
+  --shadow-sm: 0 2px 8px rgb(23 32 27 / 0.06), 0 1px 2px rgb(23 32 27 / 0.04);
+  --shadow-md: 0 12px 32px rgb(23 32 27 / 0.1), 0 2px 6px rgb(23 32 27 / 0.05);
+
+  --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-rise: rise 0.9s var(--ease-brand) both;
+  --animate-bump: bump 0.45s var(--ease-brand);
+  --animate-ping-soft: ping-soft 2.2s ease-out infinite;
+  --animate-reveal: reveal 1.1s var(--ease-brand) both;
+  --animate-fill: fill var(--slide-duration, 6s) linear forwards;
+
+  @keyframes rise {
+    from { transform: translateY(30px); opacity: 0.001; }
+  }
+  @keyframes bump {
+    40% { transform: scale(1.35); }
+  }
+  @keyframes ping-soft {
+    from { transform: scale(0.7); opacity: 1; }
+    to { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes reveal {
+    from { clip-path: inset(0 0 100% 0 round 18px); }
+    to { clip-path: inset(0 0 0 0 round 18px); }
+  }
+  @keyframes fill {
+    to { transform: scaleX(1); }
+  }
+}
+
+/* shadcn/ui variables, pointed at the brand tokens */
+:root {
+  color-scheme: light;
+  --radius: 0.75rem;
+  --background: var(--color-surface);
+  --foreground: var(--color-ink);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-surface);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-ember);
+  --primary-foreground: var(--color-ink);
+  --secondary: var(--color-forest-tint);
+  --secondary-foreground: var(--color-forest-deep);
+  --muted: var(--color-surface-sunken);
+  --muted-foreground: var(--color-ink-muted);
+  --accent: var(--color-surface-sunken);
+  --accent-foreground: var(--color-ink);
+  --destructive: var(--color-danger);
+  --border: var(--color-line);
+  --input: var(--color-line-strong);
+  --ring: var(--color-ember-ink);
+
+  --gutter: 16px;
+  --section-gap: 56px;
+}
+@media (min-width: 900px) {
+  :root { --gutter: 40px; --section-gap: 112px; }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --spacing-gutter: var(--gutter);
+  --spacing-section: var(--section-gap);
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-padding-top: 96px; }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: clip;
+  }
+  html[lang="en"] body { line-height: 1.6; }
+  :focus-visible { outline: 2px solid var(--color-ember-ink); outline-offset: 2px; }
+  img, svg { display: block; max-width: 100%; }
+}
+
+@layer components {
+  /* Fabric specs and counters: IBM Plex Mono, isolated so it reads LTR inside Arabic */
+  .spec {
+    font: 500 12px/1.5 var(--font-mono);
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    unicode-bidi: isolate;
+    direction: ltr;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  }
+}
+
+/* Arrows are drawn pointing right; in RTL they point left */
+[dir="rtl"] .icon-dir { transform: scaleX(-1); }
+
+/* Hero progress bars fill from the reading start */
+.progress-fill { transform-origin: left; }
+[dir="rtl"] .progress-fill { transform-origin: right; }
+
+/* Ember scrollbars across the whole site (page, dialogs, carousels, drawers) */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: var(--color-surface-sunken); }
+*::-webkit-scrollbar-thumb {
+  background: var(--color-ember);
+  border-radius: 10px;
+  border: 2px solid var(--color-surface-sunken);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--color-ember-ink); }
+*::-webkit-scrollbar-corner { background: var(--color-surface-sunken); }
+/* Firefox has no pseudo-elements; Chromium would ignore the rules above if this applied there */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--color-ember) var(--color-surface-sunken); }
+}
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .progress-fill[data-active="true"] { transform: scaleX(1); }
+}
