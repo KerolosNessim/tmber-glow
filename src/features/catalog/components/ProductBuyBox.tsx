@@ -8,6 +8,7 @@ import { Button } from '@/shared/components/ui/button'
 import { useLocalized } from '@/shared/hooks/useLocalized'
 import { cn } from '@/shared/lib/utils'
 import { useUiStore } from '@/shared/store/ui.store'
+import { isSizeAvailable } from '../lib/availability'
 import type { Product, Size } from '../types/catalog.types'
 
 const DETAILS = ['fabric', 'fit', 'care'] as const
@@ -27,6 +28,7 @@ export function ProductBuyBox({ product, colors, size, onSizeChange }: Props) {
   const add = useCartStore((s) => s.add)
   const openCart = useUiStore((s) => s.openCart)
   const [qty, setQty] = useState(1)
+  const canBuy = isSizeAvailable(product, size)
 
   const addToBag = () => {
     add(product, size, qty)
@@ -54,20 +56,26 @@ export function ProductBuyBox({ product, colors, size, onSizeChange }: Props) {
             </a>
           </legend>
           <div className="flex flex-wrap gap-2" >
-            {product.sizes.map((s) => (
-              <button
-                key={s}
-                type="button"
-                aria-pressed={s === size}
-                onClick={() => onSizeChange(s)}
-                className={cn(
-                  'size-12 flex items-center justify-center cursor-pointer rounded-full border-[1.5px] px-4 text-[15px] font-semibold transition-colors',
-                  s === size ? 'border-forest bg-forest text-surface' : 'border-line-strong hover:border-ink',
-                )}
-              >
-                {s}
-              </button>
-            ))}
+            {product.sizes.map((s) => {
+              const available = isSizeAvailable(product, s)
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  aria-pressed={s === size}
+                  disabled={!available}
+                  title={available ? undefined : t('soldOut')}
+                  onClick={() => onSizeChange(s)}
+                  className={cn(
+                    'size-12 flex items-center justify-center cursor-pointer rounded-full border-[1.5px] px-4 text-[15px] font-semibold transition-colors',
+                    s === size ? 'border-forest bg-forest text-surface' : 'border-line-strong hover:border-ink',
+                    !available && 'cursor-not-allowed border-line text-ink-muted line-through opacity-50 hover:border-line',
+                  )}
+                >
+                  {s}
+                </button>
+              )
+            })}
           </div>
         </fieldset>
         {colors.length > 1 && (
@@ -122,8 +130,14 @@ export function ProductBuyBox({ product, colors, size, onSizeChange }: Props) {
               <Plus className="size-4" />
             </button>
           </div>
-          <Button size="lg" className="min-w-[200px] flex-1" onClick={addToBag}>
-            {t('common:actions.addToBag')} · <span className="tabular-nums">{price(product.price * qty)}</span>
+          <Button size="lg" className="min-w-[200px] flex-1" disabled={!canBuy} onClick={addToBag}>
+            {canBuy ? (
+              <>
+                {t('common:actions.addToBag')} · <span className="tabular-nums">{price(product.price * qty)}</span>
+              </>
+            ) : (
+              t('soldOut')
+            )}
           </Button>
         </div>
       </div>

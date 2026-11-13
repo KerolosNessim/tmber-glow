@@ -8,6 +8,8 @@ export interface Photo {
   alt: Localized
   /** CSS object-position focal point, e.g. "50% 22%" */
   focus?: string
+  /** Cloudinary id, set when the photo was uploaded from the dashboard */
+  publicId?: string
 }
 
 export interface ApiResponse<T> {

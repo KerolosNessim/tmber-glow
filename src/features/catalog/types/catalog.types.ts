@@ -33,6 +33,8 @@ export interface Product {
   compareAtPrice?: number
   photo: Photo
   sizes: Size[]
+  /** Offered sizes with no stock left (from the API; absent in the dummy data) */
+  soldOut?: Size[]
   badge?: ProductBadge
 }
 

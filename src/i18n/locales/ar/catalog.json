@@ -7,6 +7,7 @@
   "count_many": "{{count}} منتج",
   "count_other": "{{count}} منتج",
   "chooseSize": "اختار المقاس",
+  "soldOut": "خلص",
   "groups": {
     "all": "الكل",
     "tops": "فوق",

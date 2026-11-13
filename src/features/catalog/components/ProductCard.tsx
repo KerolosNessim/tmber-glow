@@ -5,7 +5,7 @@ import { useAddToCart } from '@/features/cart/hooks/useAddToCart'
 import { Button } from '@/shared/components/ui/button'
 import { useLocalized } from '@/shared/hooks/useLocalized'
 import { cn } from '@/shared/lib/utils'
-import { DEFAULT_SIZE } from '../constants/catalog.constants'
+import { defaultSize, isSizeAvailable, isSoldOut } from '../lib/availability'
 import type { Product, Size } from '../types/catalog.types'
 import { ProductBadge } from './ProductBadge'
 
@@ -13,7 +13,8 @@ export function ProductCard({ product }: { product: Product }) {
   const { t } = useTranslation(['catalog', 'common'])
   const { l, price } = useLocalized()
   const addToCart = useAddToCart()
-  const [size, setSize] = useState<Size>(product.sizes.includes(DEFAULT_SIZE) ? DEFAULT_SIZE : product.sizes[0])
+  const [size, setSize] = useState<Size>(() => defaultSize(product))
+  const soldOut = isSoldOut(product)
 
   return (
     <article className="grid content-start gap-3 rounded-lg border border-line bg-surface p-2.5 pb-4 transition-[border-color,box-shadow] duration-250 hover:border-line-strong hover:shadow-sm">
@@ -45,24 +46,30 @@ export function ProductCard({ product }: { product: Product }) {
       <fieldset className="px-1">
         <legend className="sr-only">{t('chooseSize')}</legend>
         <div className="flex flex-wrap gap-1.5" >
-          {product.sizes.map((s) => (
-            <button
-              key={s}
-              type="button"
-              aria-pressed={s === size}
-              onClick={() => setSize(s)}
-              className={cn(
-                'size-9 flex items-center justify-center cursor-pointer rounded-full border-[1.5px] px-2 text-[13px] font-semibold transition-colors',
-                s === size ? 'border-forest bg-forest text-surface' : 'border-line-strong hover:border-forest hover:bg-forest/10 hover:text-forest',
-              )}
-            >
-              {s}
-            </button>
-          ))}
+          {product.sizes.map((s) => {
+            const available = isSizeAvailable(product, s)
+            return (
+              <button
+                key={s}
+                type="button"
+                aria-pressed={s === size}
+                disabled={!available}
+                title={available ? undefined : t('soldOut')}
+                onClick={() => setSize(s)}
+                className={cn(
+                  'size-9 flex items-center justify-center cursor-pointer rounded-full border-[1.5px] px-2 text-[13px] font-semibold transition-colors',
+                  s === size ? 'border-forest bg-forest text-surface' : 'border-line-strong hover:border-forest hover:bg-forest/10 hover:text-forest',
+                  !available && 'cursor-not-allowed border-line text-ink-muted line-through opacity-50 hover:border-line hover:bg-transparent hover:text-ink-muted',
+                )}
+              >
+                {s}
+              </button>
+            )
+          })}
         </div>
       </fieldset>
-      <Button size="sm" className="mx-1" onClick={() => addToCart(product, size)}>
-        {t('common:actions.addToBag')}
+      <Button size="sm" className="mx-1" disabled={soldOut} onClick={() => addToCart(product, size)}>
+        {soldOut ? t('soldOut') : t('common:actions.addToBag')}
       </Button>
     </article>
   )

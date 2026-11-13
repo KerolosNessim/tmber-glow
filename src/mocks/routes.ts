@@ -45,4 +45,19 @@ export const routes: MockRoute[] = [
     path: '/products/:id',
     handler: ({ params }) => products.find((p) => p.id === params.id),
   },
+  {
+    method: 'GET',
+    path: '/settings',
+    handler: () => ({ whatsappNumber: '', social: { instagram: '', facebook: '', tiktok: '' } }),
+  },
+  {
+    // Demo only: nothing is saved without the real API.
+    method: 'POST',
+    path: '/orders',
+    handler: ({ body }) => {
+      const { items } = JSON.parse(String(body)) as { items: { productId: string; qty: number }[] }
+      const subtotal = items.reduce((sum, i) => sum + (products.find((p) => p.id === i.productId)?.price ?? 0) * i.qty, 0)
+      return { number: 'TG-DEMO', subtotal, whatsappUrl: null }
+    },
+  },
 ]

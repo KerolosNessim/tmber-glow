@@ -1,0 +1,42 @@
+{
+  "title": "Checkout",
+  "subtitle": "Fill in your details, then WhatsApp opens with your order ready to send so we can confirm it and agree on shipping.",
+  "contact": "Your details",
+  "delivery": "Delivery address",
+  "fields": {
+    "name": "Name",
+    "phone": "Mobile number",
+    "phoneHint": "We'll contact you on WhatsApp on this number",
+    "governorate": "Governorate",
+    "chooseGovernorate": "Choose governorate",
+    "city": "City / area",
+    "address": "Full address",
+    "addressHint": "Street, building number, floor, apartment, and any landmark",
+    "notes": "Notes (optional)"
+  },
+  "summary": "Your order",
+  "edit": "Edit bag",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "shippingValue": "Agreed on WhatsApp",
+  "payment": "Cash on delivery",
+  "submit": "Send order on WhatsApp",
+  "submitting": "Placing your order…",
+  "empty": "Your bag is empty. Add some products first.",
+  "shop": "Shop products",
+  "errors": {
+    "phone": "Enter a valid Egyptian mobile number, e.g. 01012345678",
+    "unavailable": "Some items are no longer available in that quantity:",
+    "unavailableLine": "{{name}}, size {{size}}: only {{available}} left",
+    "generic": "Something went wrong while placing your order. Please try again."
+  },
+  "placed": {
+    "title": "Your order is in",
+    "number": "Order number",
+    "body": "One last step: send the order message on WhatsApp so we can confirm it and agree on shipping.",
+    "redirecting": "Opening WhatsApp…",
+    "whatsapp": "Send order on WhatsApp",
+    "noWhatsapp": "We'll contact you on your number shortly to confirm the order.",
+    "continue": "Continue shopping"
+  }
+}

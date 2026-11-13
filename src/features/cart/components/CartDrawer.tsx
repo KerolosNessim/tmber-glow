@@ -1,4 +1,5 @@
 import { X } from 'lucide-react'
+import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { BrandIcon } from '@/shared/components/BrandIcon'
 import { Button } from '@/shared/components/ui/button'
@@ -18,6 +19,7 @@ export function CartDrawer() {
   const setOpen = useUiStore((s) => s.setCartOpen)
   const lines = useCartStore((s) => s.lines)
   const { count, subtotal } = useCartSummary()
+  const navigate = useNavigate()
 
   return (
     <Sheet open={isOpen} onOpenChange={setOpen}>
@@ -51,7 +53,14 @@ export function CartDrawer() {
             <strong className="text-[22px] leading-none tabular-nums">{price(subtotal)}</strong>
           </div>
           <SheetDescription className="text-[13px] text-ink-muted">{t('note')}</SheetDescription>
-          <Button className="w-full" disabled={lines.length === 0}>
+          <Button
+            className="w-full"
+            disabled={lines.length === 0}
+            onClick={() => {
+              setOpen(false)
+              navigate('/checkout')
+            }}
+          >
             {t('checkout')} <BrandIcon name="arrow" directional />
           </Button>
           <SheetClose asChild>

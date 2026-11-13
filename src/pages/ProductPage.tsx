@@ -6,7 +6,7 @@ import { ProductBadge } from '@/features/catalog/components/ProductBadge'
 import { ProductBuyBox } from '@/features/catalog/components/ProductBuyBox'
 import { ProductGrid } from '@/features/catalog/components/ProductGrid'
 import { SizeChart } from '@/features/catalog/components/SizeChart'
-import { DEFAULT_SIZE } from '@/features/catalog/constants/catalog.constants'
+import { defaultSize, isSizeAvailable } from '@/features/catalog/lib/availability'
 import { useCategory } from '@/features/catalog/hooks/useCategories'
 import { useProduct } from '@/features/catalog/hooks/useProduct'
 import { useProducts } from '@/features/catalog/hooks/useProducts'
@@ -45,7 +45,7 @@ function ProductView({ product, catalog, catalogLoading, group }: ViewProps) {
   const { l, price } = useLocalized()
   const add = useCartStore((s) => s.add)
   const openCart = useUiStore((s) => s.openCart)
-  const [size, setSize] = useState<Size>(product.sizes.includes(DEFAULT_SIZE) ? DEFAULT_SIZE : product.sizes[0])
+  const [size, setSize] = useState<Size>(() => defaultSize(product))
 
   const family = product.family ?? product.id
   const colors = (catalog ?? [product]).filter((p) => (p.family ?? p.id) === family)
@@ -107,12 +107,13 @@ function ProductView({ product, catalog, catalogLoading, group }: ViewProps) {
         </div>
         <Button
           className="flex-1"
+          disabled={!isSizeAvailable(product, size)}
           onClick={() => {
             add(product, size)
             openCart()
           }}
         >
-          {t('common:actions.addToBag')}
+          {isSizeAvailable(product, size) ? t('common:actions.addToBag') : t('soldOut')}
         </Button>
       </div>
     </div>

@@ -1,6 +1,6 @@
-# Timber Glow — موقع React
+# Timber Glow — المتجر والداشبورد
 
-نسخة React من الصفحة الرئيسية لـ Timber Glow، عربي (RTL) وإنجليزي (LTR)، وكل الداتا وهمية (dummy) من غير أي API خارجي.
+متجر Timber Glow بـ React، عربي (RTL) وإنجليزي (LTR)، والداشبورد على `/admin`. الداتا جاية من `timber-glow-api`.
 
 ## التشغيل
 
@@ -34,12 +34,14 @@ npm run preview    # تشغيل نسخة الـ build
 ```
 src/
   app/                 App, router, layouts/RootLayout
-  pages/               HomePage, CollectionPage, NotFoundPage (بتجمّع الـ features)
+  pages/               HomePage, CollectionPage, ProductPage, CheckoutPage, OrderPlacedPage, NotFoundPage
   features/
     layout/            components (Header, Footer, NavLinks, MobileMenu, LanguageSwitch, AnnouncementBar), constants, types
     home/              components, hooks (useHomeContent, useSlideshow, useCarouselScroll, useParallax), services, types, constants
     catalog/           components (CategoryTile, ProductCard, ProductGrid), hooks, services, types, constants
     cart/              components (CartDrawer, CartButton, CartLineItem, FreeShippingBar), hooks, store (Zustand), types, constants
+    checkout/          services (POST /orders), constants (المحافظات)
+  admin/               الداشبورد كلها: pages, components, services, lib
   shared/
     components/        ui/ (shadcn), reactbits/, BrandIcon, Logo, SectionHeader, ...
     hooks/             useAsync, useLocalized, usePrefersReducedMotion
@@ -47,22 +49,52 @@ src/
     store/ui.store.ts  Zustand: فتح الشنطة والمنيو
     lib/, types/
   mocks/               الداتا الوهمية + mock adapter لـ axios
-  i18n/                إعداد i18next + locales/{ar,en}/{common,layout,home,catalog,cart}.json
+  i18n/                إعداد i18next + locales/{ar,en}/{common,layout,home,catalog,cart,checkout}.json
 ```
 
-## الداتا الوهمية والـ API
+## الـ API والداتا الوهمية
 
-- كل service بيعمل `api.get('/home')`, `api.get('/products')`... عادي جدًا.
-- الـ axios instance في `src/shared/services/api.ts` معاه `adapter: mockAdapter`، فالطلبات مش بتخرج للنت؛ بترد من `src/mocks/data` بعد تأخير 350ms عشان تشوف حالات التحميل.
-- لما الـ backend يجهز: حط `VITE_API_URL` في `.env` واشيل سطر `adapter`. الـ services والـ components مش هتتغير.
+الباك إند في ريبو منفصل: `timber-glow-api` (Express + MongoDB + Cloudinary).
+
+- `src/shared/services/api.ts` بيكلّم الـ API لما `VITE_API_URL` يكون موجود:
+  - **محلياً** في `.env.local` (متجاهَل في git): `VITE_API_URL=http://localhost:3000`
+  - **على Vercel** في `.env.production`: `VITE_API_URL=/api`، و`vercel.json` بيحوّل `/api/*` لمشروع الـ API.
+- من غير `VITE_API_URL`، أو مع `VITE_USE_MOCKS=true`، الطلبات بترد من `src/mocks` (من غير حفظ أوردرات).
 
 | Endpoint | بيرجع |
 |---|---|
 | `GET /home` | الـ slides، المميزات، الـ intro، الطقم، الـ lookbook |
 | `GET /categories?group=tops\|bottoms` | الأقسام |
 | `GET /categories/:slug` | قسم واحد |
-| `GET /products?category=&ids=` | المنتجات |
+| `GET /products?category=&ids=` | المنتجات (`soldOut` = المقاسات اللي خلصت) |
 | `GET /products/:id` | منتج واحد |
+| `GET /settings` | رقم الواتساب ولينكات السوشيال |
+| `POST /orders` | يسجّل الأوردر ويرجّع رقمه ورابط واتساب |
+
+## الأوردرات
+
+الشنطة ← `/checkout` (الاسم، الموبايل، المحافظة، العنوان) ← الأوردر يتسجل ← `/order/:number` وواتساب بيفتح برسالة الطلب جاهزة.
+الشحن بيتحدد على واتساب، والأدمن بيكتبه في الأوردر من الداشبورد.
+
+## الداشبورد (`/admin`)
+
+جوه نفس التطبيق، بس في chunk لوحده (`src/admin`) فمش بيتحمّل مع المتجر. عربي بس.
+
+| الصفحة | فيها |
+|---|---|
+| نظرة عامة | مبيعات النهارده / ٧ أيام / الشهر، الأوردرات الجديدة، الأكثر مبيعاً، المقاسات اللي قربت تخلص |
+| الأوردرات | فلتر بالحالة والتاريخ، بحث بالرقم/الاسم/الموبايل، تفاصيل الأوردر، تغيير الحالة، الشحن، ملاحظات |
+| المنتجات / الأقسام | إضافة وتعديل وحذف، مخزون لكل مقاس، رفع صور على Cloudinary، ترتيب الأقسام |
+| الصفحة الرئيسية | السلايدر، المميزات، المقدمة، الطقم، صور انستجرام |
+| الإعدادات | رقم الواتساب ولينكات السوشيال |
+
+المخزون بيتخصم لما الأدمن **يأكّد** الأوردر، وبيرجع لو الأوردر اتلغى.
+
+## الرفع على Vercel
+
+1. ارفع `timber-glow-api` الأول كمشروع Vercel (الخطوات في الـ README بتاعه)، وخد رابطه، مثلاً `https://timber-glow-api.vercel.app`.
+2. لو الرابط مختلف، غيّره في أول rewrite في `vercel.json`.
+3. ارفع الريبو ده كمشروع Vercel تاني (Vite بيتعرف لوحده)، واربط الدومين بتاعك عليه من Settings ← Domains.
 
 ## اللغة والاتجاه
 

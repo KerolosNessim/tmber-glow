@@ -1,7 +1,8 @@
 import { Link } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { BrandIcon } from '@/shared/components/BrandIcon'
-import { FOOTER_HELP, FOOTER_SHOP, SOCIAL_LINKS } from '../constants/navigation'
+import { FOOTER_HELP, FOOTER_SHOP } from '../constants/navigation'
+import { useSocialLinks } from '../hooks/useStoreSettings'
 import type { FooterLink } from '../types/layout.types'
 
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
@@ -24,6 +25,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
 
 export function Footer() {
   const { t } = useTranslation('layout')
+  const socialLinks = useSocialLinks()
   return (
     <footer id="contact" className="overflow-hidden rounded-t-xl bg-forest text-on-forest">
       <div className="wrap grid grid-cols-2 gap-x-12 gap-y-8 pt-12 pb-12 lg:grid-cols-[1.3fr_1fr_1fr] lg:pt-20">
@@ -33,10 +35,11 @@ export function Footer() {
           </h2>
           <p className="mt-3 mb-6 max-w-[40ch] opacity-90">{t('footer.supportBody')}</p>
           <div className="flex flex-wrap gap-2">
-            {SOCIAL_LINKS.map((s) => (
+            {socialLinks.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
+                {...(s.href.startsWith('http') && { target: '_blank', rel: 'noreferrer' })}
                 dir="ltr"
                 className="inline-flex h-11 items-center gap-2 rounded-full px-4 text-sm leading-none font-medium no-underline shadow-[inset_0_0_0_1.5px_rgb(241_240_233/0.4)] transition-colors hover:bg-on-forest hover:text-forest-deep"
               >

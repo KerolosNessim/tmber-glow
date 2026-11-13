@@ -4,6 +4,7 @@
   "count_one": "{{count}} product",
   "count_other": "{{count}} products",
   "chooseSize": "Choose a size",
+  "soldOut": "Sold out",
   "groups": {
     "all": "All",
     "tops": "Tops",
