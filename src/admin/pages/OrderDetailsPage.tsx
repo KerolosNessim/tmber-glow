@@ -7,7 +7,7 @@ import { BrandIcon } from '@/shared/components/BrandIcon'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Textarea } from '@/shared/components/ui/textarea'
-import { cn } from '@/shared/lib/utils'
+import { ConfirmDelete } from '../components/ConfirmDelete'
 import { PageHeader, Section } from '../components/form'
 import { StatusBadge } from '../components/StatusBadge'
 import { ACTION_LABEL, NEXT_STATUSES, STATUS_LABEL, formatDate, money } from '../lib/orders'
@@ -45,7 +45,6 @@ export function OrderDetailsPage() {
   const c = o.customer
 
   function changeStatus(status: OrderStatus) {
-    if (status === 'cancelled' && !window.confirm('متأكد إنك عايز تلغي الأوردر؟ لو كان متأكد، القطع هترجع للمخزون.')) return
     update.mutate({ status })
   }
 
@@ -72,18 +71,30 @@ export function OrderDetailsPage() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {NEXT_STATUSES[o.status].map((s) => (
-          <Button
-            key={s}
-            size="sm"
-            variant={s === 'cancelled' ? 'outline' : s === 'new' ? 'ghost' : 'default'}
-            disabled={update.isPending}
-            onClick={() => changeStatus(s)}
-            className={cn(s === 'cancelled' && 'text-danger')}
-          >
-            {ACTION_LABEL[s]}
-          </Button>
-        ))}
+        {NEXT_STATUSES[o.status].map((s) =>
+          s === 'cancelled' ? (
+            <ConfirmDelete
+              key={s}
+              title={`إلغاء أوردر #${o.number}؟`}
+              description={
+                o.stockDeducted
+                  ? 'الأوردر هيتلغي، والقطع هترجع للمخزون. تقدر ترجّعه «جديد» بعد كده لو احتجت.'
+                  : 'الأوردر هيتلغي. تقدر ترجّعه «جديد» بعد كده لو احتجت.'
+              }
+              confirmLabel="إلغاء الأوردر"
+              cancelLabel="رجوع"
+              onConfirm={() => changeStatus(s)}
+            >
+              <Button size="sm" variant="outline" disabled={update.isPending} className="text-danger">
+                {ACTION_LABEL[s]}
+              </Button>
+            </ConfirmDelete>
+          ) : (
+            <Button key={s} size="sm" variant={s === 'new' ? 'ghost' : 'default'} disabled={update.isPending} onClick={() => changeStatus(s)}>
+              {ACTION_LABEL[s]}
+            </Button>
+          ),
+        )}
       </div>
       {o.status === 'new' && (
         <p className="-mt-3 text-sm text-ink-muted">لما تأكد الأوردر، القطع بتتخصم من المخزون. لو ألغيته بعد كده، بترجع تاني.</p>

@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, ImageIcon, Plus, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/shared/components/ui/button'
 import { cn } from '@/shared/lib/utils'
+import { ConfirmDelete } from './ConfirmDelete'
 
 /**
  * Repeating items (slides, perks, posts…) with add, remove and reorder.
@@ -46,7 +47,6 @@ export function ListEditor<T>({
   }
 
   function remove(index: number) {
-    if (!window.confirm(`تمسح «${itemTitle(items[index], index)}»؟`)) return
     onChange(items.filter((_, j) => j !== index))
     if (open === index) setOpen(null)
     else if (open !== null && open > index) setOpen(open - 1)
@@ -101,9 +101,22 @@ export function ListEditor<T>({
                 <IconButton label="لتحت" disabled={i === items.length - 1} onClick={() => move(i, 1)}>
                   <ChevronDown className="size-4" />
                 </IconButton>
-                <IconButton label="امسح" disabled={items.length <= min} onClick={() => remove(i)} className="hover:bg-ember-tint hover:text-danger">
-                  <Trash2 className="size-4" />
-                </IconButton>
+                {items.length <= min ? (
+                  <IconButton label="امسح" disabled>
+                    <Trash2 className="size-4" />
+                  </IconButton>
+                ) : (
+                  <ConfirmDelete
+                    title={`مسح «${itemTitle(item, i)}»؟`}
+                    description="هيتشال من الصفحة الرئيسية لما تدوس حفظ."
+                    confirmLabel="امسح"
+                    onConfirm={() => remove(i)}
+                  >
+                    <IconButton label="امسح" className="hover:bg-ember-tint hover:text-danger">
+                      <Trash2 className="size-4" />
+                    </IconButton>
+                  </ConfirmDelete>
+                )}
               </div>
             </div>
             <div data-list-item={i} hidden={!isOpen} className="grid gap-4 border-t border-line p-4">
