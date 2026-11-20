@@ -5,8 +5,14 @@ export const NAV_ITEMS: NavItem[] = [
   { key: 'catalog', to: '/collections' },
   { key: 'sets', to: '/#look' },
   { key: 'contact', to: '#contact' },
-  { key: 'returns', to: '#contact' },
 ]
+
+/** Hash links (#contact, /#look) only scroll within a page, so they never mark the active page. */
+export function isNavActive(to: string, pathname: string) {
+  if (to.includes('#')) return false
+  if (to === '/') return pathname === '/'
+  return pathname === to || pathname.startsWith(`${to}/`)
+}
 
 export const FOOTER_SHOP: FooterLink[] = [
   { key: 'tops', to: '/#tops' },

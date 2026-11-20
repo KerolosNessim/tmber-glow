@@ -2,7 +2,7 @@ import type { BrandIconName } from '@/shared/components/BrandIcon'
 
 export interface NavItem {
   /** Key under `layout:nav` */
-  key: 'home' | 'catalog' | 'sets' | 'contact' | 'returns'
+  key: 'home' | 'catalog' | 'sets' | 'contact'
   to: string
 }
 

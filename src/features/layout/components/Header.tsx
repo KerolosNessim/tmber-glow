@@ -6,15 +6,26 @@ import { useUiStore } from '@/shared/store/ui.store'
 import { Search } from 'lucide-react'
 import type { AnchorHTMLAttributes, CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router'
-import { NAV_ITEMS } from '../constants/navigation'
+import { cn } from '@/shared/lib/utils'
+import { Link, useLocation } from 'react-router'
+import { NAV_ITEMS, isNavActive } from '../constants/navigation'
 import { LanguageSwitch } from './LanguageSwitch'
 import { NavLinks } from './NavLinks'
 import { SearchDialog } from './SearchDialog'
 
 /** CardNav renders plain `href` anchors; route them through the router instead. */
-function RouterAnchor({ href = '#', ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  return <Link to={href} {...props} />
+function RouterAnchor({ href = '#', className, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const { pathname } = useLocation()
+  const isNavLink = NAV_ITEMS.some((item) => item.to === href)
+  const active = isNavLink && isNavActive(href, pathname)
+  return (
+    <Link
+      to={href}
+      aria-current={active ? 'page' : undefined}
+      className={cn(className, active && 'font-semibold text-ember-ink!')}
+      {...props}
+    />
+  )
 }
 
 const SHOP_KEYS = ['home', 'catalog', 'sets']
